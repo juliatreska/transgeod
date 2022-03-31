@@ -132,6 +132,13 @@ class Transformacje:
         return(m.degrees(el), m.degrees(az))
     
     def lambda0(self, lam):
+        '''
+        Funkcja wyznaczająca wartosc poludnika osiowego dla danej dlugosci lambda.
+        INPUT:
+            lam [float] - dlugosc geodezyjna w stopniach dziesietnych
+        OUTPUT:
+            L0 [float] - wartosc poludnika osiowego w stopniach dziesietnych
+        '''
         L0 = (m.floor( (lam + 1.5) / 3)) *3
         return(L0)
     
