@@ -131,7 +131,11 @@ class Transformacje:
         el = m.asin((u) / m.sqrt(n**2 + e**2 + u**2))
         return(m.degrees(el), m.degrees(az))
     
-    def fl2xygk(self, fi, lam):
+    def lambda0(self, lam):
+        L0 = (m.floor( (lam + 1.5) / 3)) *3
+        return(L0)
+    
+    def fl2xygk(self, fi, lam, L0):
         '''
         Funkcja przeliczajaca wspolrzedne geodezyjne f, l na plaszczyzne Gaussa-Krugera.
         INPUT:
@@ -142,7 +146,6 @@ class Transformacje:
             ygk [float] - wspolrzedna y na plaszczyznie GK w metrach
             L0 [float] - poludnik osiowy w stopniach dziesietnych
         '''
-        L0 = (m.floor( (fi + 1.5) / 3)) *3
         
         fi = m.radians(fi)
         lam = m.radians(lam)
@@ -162,7 +165,8 @@ class Transformacje:
         
         xgk = si + ((dL**2)/2)*N*m.sin(fi)*m.cos(fi)*(1+((dL**2)/12)*((m.cos(fi))**2)*(5-t**2+9*n2+4*(n2**2))+((dL**4)/360)*((m.cos(fi))**4)*(61-58*(t**2)+t**4+270*n2-330*n2*(t**2)))
         ygk = dL * N * m.cos(fi) * (1+((dL**2)/6)*((m.cos(fi))**2)*(1-t**2+n2)+((dL**4)/120)*((m.cos(fi))**4)*(5-18*(t**2)+t**4+14*n2-58*n2*(t**2)))
-        return(xgk, ygk, L0)
+
+        return(xgk, ygk)
     
     def u1992(self, xgk, ygk):
     	'''
@@ -190,7 +194,7 @@ class Transformacje:
     		y2000 [float] - wspolrzedna y w ukladzie PL2000 w metrach
     	'''
     	x2000 = xgk * 0.999923
-    	y2000 = ygk * 0.999923 + (L0*180/m.pi/3) * 1000000 + 500000
+    	y2000 = ygk * 0.999923 + (L0/3) * 1000000 + 500000
     	return(x2000, y2000)
     
     def u1992togk(self, x1992, y1992):
@@ -290,6 +294,31 @@ class Transformacje:
     	'''
     	odleglosc = m.sqrt((Xp - Xk)**2 + (Yp - Yk)**2 + (Zp - Zk)**2)
     	return(odleglosc)
+
+    def dms(self, radiany):
+        '''
+        Funkcja przeliczajaca wartosci z radianow na stopnie, minuty, sekundy.
+        INPUT:
+            radiany [float] - wartosc w radianach
+        OUTPUT:
+            wynik [string] - ta sama wartosc w stopniach, minutach, sekundach
+        '''
+        i = 1
+        z = ''
+        
+        if radiany < 0:
+            i = -1
+            z = '-'
+        
+        radiany = abs(radiany)
+        
+        radiany = radiany*180/m.pi
+        d = i * m.floor(radiany)
+        minuty = m.floor(60*(radiany - d))
+        s = (radiany - d - minuty / 60) * 3600
+        wynik = f"{z} {d: .0f} {minuty: .0f} {s: 0.5f}"
+        return(wynik)
+
 
 if __name__ == '__main__':
     #utworzenie obiektu
