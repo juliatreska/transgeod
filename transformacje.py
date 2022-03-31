@@ -333,5 +333,3 @@ if __name__ == '__main__':
     f, l, h = geo.xyz2flh(X, Y, Z)
     print(f, l, h)
     
-#WSZYSTKIE FUNKCJE NA KOLEJNE ZAJĘCIAAAA
-#uruchom git bash, inicjalizacja, ls -all, git status, git add transformacje.py, git commit -m"dodano modul transformacje", repozytorium na githubie, dodajemy repozytorium do folderu i push
