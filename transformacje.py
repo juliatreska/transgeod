@@ -108,7 +108,7 @@ class Transformacje:
         XYZ = np.array(XYZ)
         	
         Rneu = np.array([[-m.sin(fi)*m.cos(lam), -m.sin(lam), m.cos(fi)*m.cos(lam)],
-                         [-m.sin(fi)*m.sin(lam), m.cos(fi), m.cos(fi)*m.sin(lam)],
+                         [-m.sin(fi)*m.sin(lam), m.cos(lam), m.cos(fi)*m.sin(lam)],
                          [m.cos(fi), 0, m.sin(fi)]])
         
         n, e, u = Rneu.T @ XYZ
@@ -339,4 +339,5 @@ if __name__ == '__main__':
     #przeliczenie na flh
     f, l, h = geo.xyz2flh(X, Y, Z)
     print(f, l, h)
+    print(geo.dms(m.radians(f)))
     
