@@ -286,7 +286,7 @@ class Transformacje:
     	odleglosc = m.sqrt((Xk - Xp)**2+(Yk - Yp)**2)
     	return(odleglosc)
     
-    def ogledlosc3D(self, Xp, Yp, Zp, Xk, Yk, Zk):
+    def odleglosc3D(self, Xp, Yp, Zp, Xk, Yk, Zk):
     	'''
     	Funkcja sluzaca obliczeniu odleglosci 3D.
     	INPUT:
