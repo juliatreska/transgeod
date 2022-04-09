@@ -20,6 +20,8 @@ xy2000 = np.zeros((12,2))
 xy1992 = np.zeros((12,2))
 neu = np.zeros((12,3))
 elaz = np.zeros((12,2))
+o2d = np.zeros((12,1))
+o3d = np.zeros((12,1))
 
 for indeks, wiersz in enumerate(tablica):
     f, l, h = geo.xyz2flh(wiersz[0], wiersz[1], wiersz[2])
@@ -63,7 +65,13 @@ for indeks, wiersz in enumerate(tablica):
     elaz[indeks, 0] = el
     elaz[indeks, 1] = az
     
-dane_raport = np.hstack((tablica, flh, xy2000, xy1992, neu, elaz))
+    #odległosc od tego samego punktu co uzywany do ukladu neu
+    
+    o2 = geo.odleglosc2D(wiersz[0], wiersz[1], X, Y)
+    
+    o2d[indeks, 0] = o2
+    
+dane_raport = np.hstack((tablica, flh, xy2000, xy1992, neu, elaz, o2d))
     
 # zapis: https://docs.scipy.org/doc/numpy-1.15.0/reference/generated/numpy.savetxt.html
-out = np.savetxt("wsp_out.txt", dane_raport, delimiter='--- ', fmt = ['%10.3f', '%10.3f', '%10.3f', '%10.5f', '%10.5f', '%10.3f', '%10.3f', '%10.3f', '%10.3f', '%10.3f', '%10.8f', '%10.8f', '%10.8f', '%10.5f', '%10.5f'], header = 'konwersja współrzednych geodezyjnych \\ julia treska \n X [m] --------- Y [m] ------- Z [m] ------- fi [st] ------ lam [st] ---- h [m] ------ x2000 [m] ----- y2000 [m] ----- x92 [m] ------ y92 [m] ------ n --------- e ----------- u ------- elewacja [st] --- azymut [st]')
+out = np.savetxt("wsp_out.txt", dane_raport, delimiter='--- ', fmt = ['%10.3f', '%10.3f', '%10.3f', '%10.5f', '%10.5f', '%10.3f', '%10.3f', '%10.3f', '%10.3f', '%10.3f', '%10.8f', '%10.8f', '%10.8f', '%10.5f', '%10.5f', '%10.3f'], header = 'konwersja współrzednych geodezyjnych \\ julia treska \n X [m] --------- Y [m] ------- Z [m] ------- fi [st] ------ lam [st] ---- h [m] ------ x2000 [m] ----- y2000 [m] ----- x92 [m] ------ y92 [m] ------ n --------- e ----------- u ------- elewacja [st] --- azymut [st] -- odl 2D elip [m]')
